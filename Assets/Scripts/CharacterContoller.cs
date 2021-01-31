@@ -11,8 +11,9 @@ public class CharacterContoller : MonoBehaviour
     public List<HidingChild> HidingChildren;
     public Transform UpperBody;
     public Transform FeetTransform;
-    private const float SPEED = 2f;
-    private const float CATCH_RADIUS_SQUARED = 0.1f;
+    public Transform FanTransform;
+    private const float SPEED = 5f;
+    private const float CATCH_RADIUS_SQUARED = 9f;
     private static readonly int _headIdleAnimation = Animator.StringToHash("Base Layer.HeadIdleAnimation");
     private static readonly int _headMoveAnimation = Animator.StringToHash("Base Layer.HeadMoveAnimation");
     private static readonly int _feetIdleAnimation = Animator.StringToHash("Base Layer.FeetIdleAnimation");
@@ -40,6 +41,8 @@ public class CharacterContoller : MonoBehaviour
                 child.Caught = true;
             }
         }
+        
+        FanTransform.Rotate(Vector3.forward, (_moving? 720f : 360f)*Time.deltaTime);
     }
     
     private void FixedUpdate()

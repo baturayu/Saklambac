@@ -6,7 +6,7 @@ public class FlashlightCollider : MonoBehaviour
     public Transform FlashlightTransform;
     private int _flashlightMask;
     private int _characterMask;
-    
+
     private void Start()
     {
         _flashlightMask = LayerMask.GetMask("Flashlight");

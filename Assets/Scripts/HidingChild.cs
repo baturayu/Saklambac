@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
 public class HidingChild : MonoBehaviour
 {
-    public SpriteRenderer Renderer;
+    public SpriteRenderer[] HeadRenderers;
+    public SpriteRenderer[] FootRenderers;
     public Light2D Light;
 
     private bool _found;
@@ -13,7 +15,10 @@ public class HidingChild : MonoBehaviour
         get => _found;
         set
         {
-            Renderer.enabled = value;
+            foreach (var spriteRenderer in HeadRenderers)
+            {
+                spriteRenderer.enabled = value;
+            }
             _found = true;
         }
     }
@@ -22,8 +27,26 @@ public class HidingChild : MonoBehaviour
         get => _caught;
         set
         {
+            foreach (var spriteRenderer in FootRenderers)
+            {
+                spriteRenderer.enabled = value;
+            }
             Light.enabled = value;
             _caught = value;
+        }
+    }
+
+    private void Start()
+    {
+        Light.enabled = false;
+        foreach (var spriteRenderer in HeadRenderers)
+        {
+            spriteRenderer.enabled = false;
+        }
+        
+        foreach (var spriteRenderer in FootRenderers)
+        {
+            spriteRenderer.enabled = false;
         }
     }
 }
