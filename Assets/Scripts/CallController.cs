@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CallController : MonoBehaviour
 {
-    public ParticleSystem CallParticle; 
+    public ParticleSystem CallParticle;
     private List<HidingChild> _hidingChildren;
 
     private void Start()
@@ -14,19 +14,30 @@ public class CallController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            CallClosestChild();
+            CallClosestChild(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            CallClosestChild(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            CallClosestChild(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            CallClosestChild(3);
         }
     }
 
-    private void CallClosestChild()
+    private void CallClosestChild(int childIndex)
     {
-        var playerPosition = transform.position;
-        var children = new List<HidingChild>(_hidingChildren);
-        children.Sort((a, b) => 
-                          (playerPosition - a.transform.position).sqrMagnitude.CompareTo((playerPosition - b.transform.position).sqrMagnitude));
-        DisplayHint(transform.position, children[0].transform.position);
+        DisplayHint(transform.position, _hidingChildren[childIndex].transform.position);
     }
 
     private bool IsInScreen(Camera cam, Vector3 pos)
@@ -45,7 +56,7 @@ public class CallController : MonoBehaviour
     {
         var cam = Camera.main;
         if (IsInScreen(cam, childPosition)) return;
-        
+
         var diffVector = (childPosition - playerPosition).normalized;
         var slope = diffVector.y / diffVector.x;
         var aspectRatio = 1f / cam.aspect;
